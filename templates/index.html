@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <div class="container my-3">
+        <h2>Add a Todo</h2>
+        <form action="/" method="POST">
+            <div class="mb-3">
+              <label for="title" class="col-sm-2 col-form-label">Todo title</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="title" id="title" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="desc" class="col-sm-2 col-form-label"
+                >Description</label
+              >
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="desc" id="desc" required/>
+              </div>
+          
+            </div>
+      
+            
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+    </div>
+    <hr>
+    <div class="container my-3">
+        <h2>Your Todos</h2>
+        
+        {% if allTodo|length == 0 %}
+        <div class="alert alert-danger" >
+          No record found. Add your first todo now!
+        </div>
+        
+        {% else %}
+          
+        
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created On</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for todo in allTodo %}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{todo.title}}</td>
+                    <td>{{todo.desc}}</td>
+                    <td>{{todo.date_created}}</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="/update/{{todo.sno}}" type="button" class="btn btn-success">Update</a>
+                            <a href="/delete/{{todo.sno}}" type="button" class="btn btn-danger">Delete</a>
+                          </div>
+                    </td>
+                    
+                  </tr>    
+                {% endfor %}
+              
+              
+            </tbody>
+          </table>
+          {% endif %}  
+    </div>
+
+{% endblock %}
